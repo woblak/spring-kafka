@@ -145,6 +145,18 @@ public interface KafkaOperations<K, V> {
 	 * @see org.springframework.kafka.support.KafkaHeaders#MESSAGE_KEY
 	 */
 	ListenableFuture<SendResult<K, V>> send(Message<?> message);
+	
+	/**
+	 * Send a message to the provided topic if it is not set in the headers with routing 
+	 * information in message headers. The message payload
+	 * may be converted before sending.
+	 * @param message the message to send.
+	 * @return a Future for the {@link SendResult}.
+	 * @see org.springframework.kafka.support.KafkaHeaders#TOPIC
+	 * @see org.springframework.kafka.support.KafkaHeaders#PARTITION_ID
+	 * @see org.springframework.kafka.support.KafkaHeaders#MESSAGE_KEY
+	 */
+	ListenableFuture<SendResult<K, V>> send(String defaultTopic, Message<?> message);
 
 	/**
 	 * See {@link Producer#partitionsFor(String)}.
