@@ -392,7 +392,12 @@ public class KafkaTemplate<K, V> implements KafkaOperations<K, V>, ApplicationCo
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListenableFuture<SendResult<K, V>> send(Message<?> message) {
-		ProducerRecord<?, ?> producerRecord = this.messageConverter.fromMessage(message, this.defaultTopic);
+		return send(this.defaultTopic, message);
+	}
+			
+	@SuppressWarnings("unchecked")
+	public ListenableFuture<SendResult<K, V>> send(String topic, Message<?> message) {
+		ProducerRecord<?, ?> producerRecord = this.messageConverter.fromMessage(message, topic);
 		if (!producerRecord.headers().iterator().hasNext()) { // possibly no Jackson
 			byte[] correlationId = message.getHeaders().get(KafkaHeaders.CORRELATION_ID, byte[].class);
 			if (correlationId != null) {
