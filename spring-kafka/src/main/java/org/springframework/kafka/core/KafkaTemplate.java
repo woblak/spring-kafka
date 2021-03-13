@@ -394,7 +394,7 @@ public class KafkaTemplate<K, V> implements KafkaOperations<K, V>, ApplicationCo
 	public ListenableFuture<SendResult<K, V>> send(Message<?> message) {
 		return send(this.defaultTopic, message);
 	}
-			
+
 	@SuppressWarnings("unchecked")
 	public ListenableFuture<SendResult<K, V>> send(String topic, Message<?> message) {
 		ProducerRecord<?, ?> producerRecord = this.messageConverter.fromMessage(message, topic);
